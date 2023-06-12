@@ -35,7 +35,11 @@ class ComBus:
 
 
 class BusA(ComBus, protocol="A"):
-    def __init__(self, bus: str):
+    def __init__(self, bus: str, *args: Any, **kwargs: Any):
+        print("=====================================")
+        print("BusA init called")
+        print(f"{args=}, {kwargs=}")
+        print("=====================================")
         assert bus == "A"
         super().__init__()
         self._bus = bus
@@ -43,12 +47,16 @@ class BusA(ComBus, protocol="A"):
     def _communicate(self, message: str) -> str:
         # communicate with bus A using its protocol
         print("Communicating with bus A")
-        print(message)
+        print(f"{message = }")
         print("Done communicating with bus A")
 
 
 class BusB(ComBus, protocol="B"):
-    def __init__(self, bus: str):
+    def __init__(self, bus: str, *args: Any, **kwargs: Any):
+        print("=====================================")
+        print("BusB init called")
+        print(f"{args=}, {kwargs=}")
+        print("=====================================")
         assert bus == "B"
         super().__init__()
         self._bus = bus
@@ -56,7 +64,7 @@ class BusB(ComBus, protocol="B"):
     def _communicate(self, message: str) -> str:
         # communicate with bus B using its protocol
         print("Communicating with bus B")
-        print(message)
+        print(f"{message = }")
         print("Done communicating with bus B")
 
 
@@ -74,6 +82,7 @@ def communicate_with_bus(bus_type: str, message: str) -> str:
 def main():
     communicate_with_bus("A", "Hello")
     communicate_with_bus("B", "Hello")
+    bus = ComBus("A", "Hello", "World", key="value")
 
 
 if __name__ == "__main__":

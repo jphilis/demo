@@ -1,7 +1,8 @@
 from typing import Any, Dict, Type, Union
 from typing_extensions import Self
 
-#kanske ett registry pattern?
+# kanske ett registry pattern?
+
 
 class ComBus:
     _registry: Dict[str, Type[Self]] = {}
@@ -21,17 +22,17 @@ class ComBus:
 
         instance = super().__new__(cls._registry[protocol])
         return instance
-    
+
     def communicate(self, message: str) -> str:
-        #tests
+        # tests
 
         # communicate with bus using its protocol
         response = self._communicate(message)
         return response
-    
+
     def _communicate(self, message: str) -> str:
         raise NotImplementedError
-    
+
 
 class BusA(ComBus, protocol="A"):
     def __init__(self, bus: str):
@@ -45,6 +46,7 @@ class BusA(ComBus, protocol="A"):
         print(message)
         print("Done communicating with bus A")
 
+
 class BusB(ComBus, protocol="B"):
     def __init__(self, bus: str):
         assert bus == "B"
@@ -57,6 +59,7 @@ class BusB(ComBus, protocol="B"):
         print(message)
         print("Done communicating with bus B")
 
+
 def communicate_with_bus(bus_type: str, message: str) -> str:
     if bus_type == "A":
         bus = ComBus(bus_type)
@@ -66,7 +69,7 @@ def communicate_with_bus(bus_type: str, message: str) -> str:
         raise ValueError("Invalid bus type")
 
     return bus.communicate(message)
-    
+
 
 def main():
     communicate_with_bus("A", "Hello")
